@@ -1,0 +1,18 @@
+{% extends 'accounts/initialbase.html' %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %}
+    <div class="container mt-5">
+        <div class="login">
+            <form method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input class="btn btn-outline-danger" type="submit" value="Login">
+            </form>
+            <h5> Don't have an account? </h5>
+            <h5>
+                <a href="{% url 'sign-up' %}" class="text-danger">Sign Up</a>
+            </h5>
+        </div>
+    </div>
+{% endblock %}

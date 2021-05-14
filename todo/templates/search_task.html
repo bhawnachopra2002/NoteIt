@@ -1,0 +1,74 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mt-2">
+  <div class="col-12 col-lg-4 d-flex centerit">
+    <ul class="nav nav-pills navhome">
+      <li class="nav-item px-3">
+        <a class="nav-link " href="{%url 'view-all-notes'%}">NOTES</a>
+      </li>
+      <li class="nav-item ml-2 px-3 ">
+        <a class="nav-link navhomeitem active" href="{%url 'view-all-tasks'%}">TO-DO</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col  d-flex centerit">
+    <form name="searchtasksform" method="GET" action="{% url 'search-tasks' %}">  
+      <input type="text" name="search" placeholder="Search" class="searchall mt-3" style="outline:none;" width="150%"/>
+      <button id="search_submit" type="submit" class="d-inline mt-2" >
+        <img src="{%static "images/search.png" %}" class="img-fluid searchimg">
+      </button>
+    </form> 
+  </div>
+  <div class="col d-none d-md-inline mt-2">
+    <a role="button" class="btn float-right rounded-circle addtask " href="{%url 'add-task'%}">
+      <img src="{%static "images/add.png" %}" class="img-fluid">
+    </a>
+  </div>
+</div>
+{% if tasks is not none %}
+  {% regroup tasks by due_date as grouptask %}
+  {% for tasklist in grouptask reversed%}
+    <div class="container-fluid tasklist">
+      <div class="row">
+        {{ tasklist.grouper }}
+      </div>
+      {% for task in tasklist.list %}
+        <div class="row p-1">
+          <div class="col-9 col-md-10 eachtask">
+            <h6 class="d-inline text-capitalize font-weight-normal">&#10146 {{task.title}}</h6>
+            {% if task.important%}
+              <sup class="text-danger p-1">imp.</sup>
+            {% endif %}
+            <div class="mt-1">
+              {% for tag in task.tags.all %}
+              <a class="mr-1 badge badge-dark ">#{{ tag }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          <span class="d-flex justify-content-end col-3 col-md-2">
+            <a href="{% url 'update-task' task.id %}" class="">
+              <img src="{%static "images/edit.png" %}" class="img-fluid">
+            </a>
+            <a href="{% url 'confirm-delete-task' task.id %}" class="">
+              <img src="{%static "images/delete_nd.png" %}" class="img-fluid">
+            </a>
+          <span>
+        </div>
+      {% endfor %}
+      <hr>
+    </div>
+  {% endfor %}
+{%else%}
+    <hr>
+    <div class="text-center">
+      <span>No such tasks found !</span>
+    </div>
+{% endif %}
+<div class="container fixed-bottom d-md-none addbelow">
+  <a role="button" class="btn float-right rounded-circle addtask mr-0" href="{%url 'add-task'%}">
+    <img src="{%static "images/add.png" %}" class="img-fluid">
+  </a>
+</div>
+{% endblock %}

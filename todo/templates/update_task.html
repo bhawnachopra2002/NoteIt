@@ -1,0 +1,39 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row mt-2">
+  <div class="col-12 col-lg-4 d-flex centerit">
+    <ul class="nav nav-pills navhome">
+      <li class="nav-item px-3">
+        <a class="nav-link " href="{%url 'view-all-notes'%}">NOTES</a>
+      </li>
+      <li class="nav-item ml-2 px-3 ">
+        <a class="nav-link navhomeitem active" href="{%url 'view-all-tasks'%}">TO-DO</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col  d-flex centerit">
+    <form name="searchtasksform" method="GET" action="{% url 'search-tasks' %}">  
+      <input type="text" name="search" placeholder="Search" class="searchall mt-3" style="outline:none;" width="150%"/>
+      <button id="search_submit" type="submit" class="d-inline mt-2" >
+        <img src="{%static "images/search.png" %}" class="img-fluid searchimg">
+      </button>
+    </form> 
+  </div>
+  <div class="col d-none d-md-inline mt-2">
+    <a role="button" class="btn float-right rounded-circle addtask " href="{%url 'add-task'%}">
+      <img src="{%static "images/add.png" %}" class="img-fluid">
+    </a>
+  </div>
+</div>
+<div class="container w-60">
+  <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy}}
+      <input  class="btn btn-outline-danger" type="submit" value="Update">
+      <a class="btn btn-outline-danger" href="{% url 'view-all-tasks' %}" role="button">Cancel</a>
+  </form>
+</div>
+{% endblock %}
