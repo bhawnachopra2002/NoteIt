@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'notes',
     'accounts',
     'todo',
-    'whitenoise.runserver_nostatic',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
