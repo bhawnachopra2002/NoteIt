@@ -1,0 +1,152 @@
+/* Base and Initialbase html */
+
+#header-top{
+    /* White background and desired shadow */
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+.title{
+    /* to center the NOTE-IT title */
+    margin: auto;
+}
+.logout-lg{
+    margin-top: 7.5vh;
+}
+/* ###################################### */
+/* Notes and Tasks Page Navbar */
+
+.navhome>li{
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px #E71E28;
+}
+
+.navhome a{
+    color: #000000
+}
+
+.navhome .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: #FFFFFF;
+    color: #1f1414;
+    font-weight: bolder;
+}
+
+.searchall{
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(228, 72, 80, 0.73);
+    border-radius: 10px 0px 0px 10px;
+    padding: .375rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-color: transparent;
+}
+
+.searchall :focus,#search_submit :focus,#search_submit:active{
+    border:  solid  rgba(231, 30, 40, 0.73);
+    outline: none !important;
+}
+
+#search_submit{
+    background-color: rgba(231, 30, 40, 0.90);
+    box-shadow: 0px 2px 4px rgba(228, 72, 80, 0.73);
+    border-radius: 0px 10px 10px 0px;
+    border-color:transparent;
+    height: 55%;
+}
+
+.addtask,.addnote{
+    background-color: rgba(231, 30, 40, 0.96) ;
+    padding: 10px;
+    margin-right: 10%;
+}
+.centerit{
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+/* ############################################## */
+
+/* View all tasks */
+.tasklist{
+    width:90%;
+    margin: auto;
+}
+
+.deletetask,.deletenote{
+    background-color: rgba(231, 30, 40, 0.96) ;
+    padding: 2px;
+}
+
+.complete{
+    size: 200%;
+}
+
+.addbelow{
+    padding-right: 2px ;
+    padding-bottom: 2px;
+}
+
+#imp{
+    padding: 1em;
+    color: #ff0000d1;
+}
+/* ############################################# */
+
+/* View all notes */
+.note-title,.note-content{
+    color: #000000;
+}
+.notecard a:hover{
+    text-decoration: none!important;
+}
+.note-hr{
+    border: 0.04px solid #2b2a2a96;;
+    box-shadow: 0px 2px 4px rgba(58, 57, 57, 0.25);
+}
+.note-card-top{
+    min-width : 18rem;
+    max-width: 20rem;
+    min-height: 15rem;
+    box-shadow: 0px 2px 4px rgba(228, 72, 80, 0.73);
+}
+.notelist{
+    width:95%;
+    margin:auto;
+}
+/* ################################################ */
+/* Login and Signup screens */
+
+@media (min-width: 768px){
+    .login{
+        width: 40vw;
+    }
+}
+
+/* ################################################ */
+
+/* Veiw notes (detailed) */
+.vncontent,.vntitle,.vntags{
+    border: 1px solid rgba(231, 30, 40, 0.50);
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 0rem 0.10rem 0.10rem rgba(231, 30, 40, 0.36);
+    margin-top: 0.6rem;
+}
+
+.vncontent{
+    min-height: 50vh;
+}
+.vntitle{
+    font-size: larger;
+}
+
+/* ######################### */
+.confirmdelete{
+    width: fit-content;
+    border: 1px solid rgba(231, 30, 40, 0.50);
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 0rem 0.10rem 0.10rem rgba(231, 30, 40, 0.36);
+    margin: 0 auto;
+}
