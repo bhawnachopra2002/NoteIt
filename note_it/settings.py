@@ -132,7 +132,7 @@ STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = os.getenv('SECRET_KEY', SECRET_KEY)
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
