@@ -46,6 +46,7 @@ jobs:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         python manage.py makemigrations
+        python manage.py migrate account
         python manage.py migrate
     - name: Lint with flake8
       run: |
