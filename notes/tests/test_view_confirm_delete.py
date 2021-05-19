@@ -4,9 +4,12 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from ..models import Note
 
+'''A set of tests to check the confirm_delete_note view.'''
 
-class NotesUpdateTest(TestCase):
 
+class NotesConfirmDeleteTest(TestCase):
+
+    # Setup to define test data
     def setUp(self):
         self.user1 = User.objects.create_user(username='testuser1', password='12test12')
         self.user1.save()
@@ -18,15 +21,18 @@ class NotesUpdateTest(TestCase):
             )
         self.note1.tags.add("Tag test", "Tag1", "Tag2")
 
+    # Test to check if redirects are working or not in case where user is not logged in.
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('confirm-delete-note', args=[self.note1.id]))
         self.assertRedirects(response, '/accounts/login/?next=/notes/confirm_delete/'+str(self.note1.id))
 
+    # Test to check if user is able to access the URL correctly or not
     def test_confirm_delete_url_exists_at_desired_location(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get('/notes/confirm_delete/'+str(self.note1.id))
         self.assertEqual(response.status_code, 200)
 
+    # Test to check if the correct template is being rendered at logged in user's screen
     def test_logged_in_user_sees_confirm_delete_template(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get(reverse('confirm-delete-note', args=[self.note1.id]))

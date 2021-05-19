@@ -3,9 +3,12 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from ..models import Note
 
+'''A set of tests to check the view_all_notes view.'''
+
 
 class AllNotesViewTest(TestCase):
 
+    # Setup to define test data
     def setUp(self):
         user1 = User.objects.create_user(username='testuser1', password='12test12')
         user1.save()
@@ -22,15 +25,18 @@ class AllNotesViewTest(TestCase):
             if(demo.is_starred):
                 demo.tags.add("Tag1", "Tag2")
 
+    # Test to check if redirects are working or not in case where user is not logged in.
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('view-all-notes'))
         self.assertRedirects(response, '/accounts/login/?next=/notes/view_all/')
 
+    # Test to check if user is able to access the URL correctly or not
     def test_view_url_exists_at_desired_location(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get('/notes/view_all/')
         self.assertEqual(response.status_code, 200)
 
+    # Test to check if the correct template is being rendered at logged in user's screen
     def test_logged_in_user_sees_notes_template(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get(reverse('view-all-notes'))
@@ -38,6 +44,7 @@ class AllNotesViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'view_all_notes.html')
 
+    # Test to check if only the notes where current user is the user , are being rendered via template
     def test_only_user_added_notes_in_list(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get(reverse('view-all-notes'))
@@ -52,6 +59,7 @@ class AllNotesViewTest(TestCase):
         for note in response.context['notes']:
             self.assertEqual(note.user.username, 'testuser1')
 
+    # Test to check if notes being rendered are in order such that the ones having is_starred value as True are being rendered first.
     def test_notes_ordered_by_is_starred(self):
         self.client.login(username='testuser1', password='12test12')
         response = self.client.get(reverse('view-all-notes'))

@@ -1,6 +1,9 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
 
+{% comment %} This is the html page rendered at view-note url. It's base template is accounts/base.html. {% endcomment %}
+{% comment %} 'note' is passed as context to this page.{% endcomment %}
+
 {% block content %}
 <div class="row mt-2">
   <div class="col-12 col-lg-4 d-flex centerit">
@@ -51,7 +54,8 @@
       </div>
     </span>
     <span class=" d-none d-md-flex col-3 mt-2 justify-content-end ">
-      <a class="btn btn-outline-danger " href="{% url 'update-note' note.id %}" role="button">EDIT</a>
+      <a class="btn btn-outline-danger " href="{% url 'view-all-notes' %}" role="button">BACK</a>
+      <a class="btn btn-outline-danger ml-1" href="{% url 'update-note' note.id %}" role="button">EDIT</a>
       <a class="btn btn-outline-danger ml-1" href="{% url 'confirm-delete-note' note.id %}" role="button">DELETE</a>
     <span>
   </div>

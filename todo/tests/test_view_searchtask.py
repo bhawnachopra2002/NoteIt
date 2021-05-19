@@ -5,9 +5,12 @@ from ..models import TodoTask
 from datetime import date, timedelta
 from django.db.models import Q
 
+'''A set of tests to check the search_tasks view.'''
+
 
 class AllTodoSearchTest(TestCase):
 
+    # Setup to define test data
     def setUp(self):
         self.user1 = User.objects.create_user(username='testuser1', password='12test12')
         self.user1.save()
@@ -25,10 +28,12 @@ class AllTodoSearchTest(TestCase):
             if(demo.important):
                 demo.tags.add("Tag1", "Tag2")
 
+    # Test to check if redirects are working or not in case where user is not logged in.
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('search-tasks'))
         self.assertRedirects(response, '/accounts/login/?next=/todo/search/')
 
+    # Test to check if the correct template is being rendered at logged in user's screen
     def test_logged_in_user_sees_todo_template(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/todo/search/?search=Tag1'
@@ -37,6 +42,7 @@ class AllTodoSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'search_task.html')
 
+    # Test to check if only the tasks where current user is the user and contain keywod, are being rendered via template
     def test_only_user_added_tasks_in_list(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/todo/search/?search=Tag1'
@@ -51,6 +57,7 @@ class AllTodoSearchTest(TestCase):
             (TodoTask.objects.filter(Q(user=self.user1) & ((Q(title__icontains='Tag1') | Q(tags__name__icontains='Tag1')))).distinct()),
             transform=lambda x: x)
 
+    # Test to check if tasks being rendered are in order such that the ones having due_date in future are being rendered first.
     def test_tasks_ordered_by_due_date(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/todo/search/?search=Tag1'

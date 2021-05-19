@@ -4,9 +4,12 @@ from django.urls import reverse
 from ..models import Note
 from django.db.models import Q
 
+'''A set of tests to check the search_notes view.'''
+
 
 class AllNotesSearchTest(TestCase):
 
+    # Setup to define test data
     def setUp(self):
         self.user1 = User.objects.create_user(username='testuser1', password='12test12')
         self.user1.save()
@@ -23,10 +26,12 @@ class AllNotesSearchTest(TestCase):
             if(demo.is_starred):
                 demo.tags.add("Tag1", "Tag2")
 
+    # Test to check if redirects are working or not in case where user is not logged in.
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('search-notes'))
         self.assertRedirects(response, '/accounts/login/?next=/notes/search/')
 
+    # Test to check if the correct template is being rendered at logged in user's screen
     def test_logged_in_user_sees_todo_template(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/notes/search/?search=Tag2'
@@ -35,6 +40,7 @@ class AllNotesSearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'search_note.html')
 
+    # Test to check if only the notes where current user is the user and contain keywod, are being rendered via template
     def test_only_user_added_notes_in_list(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/notes/search/?search=Tag1'
@@ -49,7 +55,8 @@ class AllNotesSearchTest(TestCase):
             (Note.objects.filter(Q(user=self.user1) & ((Q(title__icontains='Tag1') | Q(tags__name__icontains='Tag1')))).distinct()),
             transform=lambda x: x)
 
-    def test_notes_ordered_by_due_date(self):
+    # Test to check if the notes being rendered via templates are such tha True value of is_starred come first
+    def test_notes_ordered_by_is_starred(self):
         self.client.login(username='testuser1', password='12test12')
         url = '/notes/search/?search=Tag1'
         response = self.client.get(url)
